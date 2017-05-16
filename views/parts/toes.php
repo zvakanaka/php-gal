@@ -1,7 +1,7 @@
 <footer>
   <a href="https://github.com/zvakanaka/gal">Code on GitHub</a>
 
-  <span id="timestampy"><?php echo 'Last updated: <time datetime="'. date('c') . '">' . date('F j, Y', getlastmod()) . '</time>'; ?></span>
+  <!-- <span id="timestampy"><?php //echo 'Last updated: <time datetime="'. date('c') . '">' . date('F j, Y', getlastmod()) . '</time>'; ?></span> -->
   <!-- <script src="js/little-big-img.js"></script> -->
   <noscript id="deferred-styles2">
     <link rel="stylesheet" type="text/css" href="<?php echo $project_dir;?>/styles/main.css"/>

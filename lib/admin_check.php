@@ -36,6 +36,9 @@ function clientInSameSubnet($client_ip=false,$server_ip=false) {
 }
 
 function same_subnet() {
-  return (clientInSameSubnet($_SERVER['REMOTE_ADDR'], $_SERVER['SERVER_ADDR']) || $_SERVER['SERVER_ADDR'] == $_SERVER['REMOTE_ADDR']);
+  error_log($_SERVER['SERVER_ADDR'].' <VS> '.$_SERVER['REMOTE_ADDR']);
+  return (clientInSameSubnet($_SERVER['REMOTE_ADDR'], $_SERVER['SERVER_ADDR'])
+    || $_SERVER['SERVER_ADDR'] == $_SERVER['REMOTE_ADDR']
+    || $_SERVER['REMOTE_ADDR'] == '::1');
 }
 ?>

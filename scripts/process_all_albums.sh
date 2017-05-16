@@ -5,7 +5,7 @@ else
 fi
 function process() {
   cd $1
-  first_photo=$(ls *JPG | sort -n | head -1)
+  first_photo=$(ls *[Jj][Pp][Gg] | sort -n | head -1)
   cd -
   bash scripts/create_thumbs.sh $1 $photo_dir
   bash scripts/create_webs.sh $1 $photo_dir
