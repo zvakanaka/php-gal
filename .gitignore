@@ -5,5 +5,3 @@ build
 *~
 log.txt
 pid.txt
-config.php
-model/setup.sql
