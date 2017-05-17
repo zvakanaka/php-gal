@@ -32,7 +32,7 @@ function updateNumImagesProgress(albumName, totalNumImages) {
         cache.put(event.request, response.clone());
         console.log(response.body);
         numImages = response.body['num_images'];
-        console.log('IMAGES:',numImages);
+        console.log('IMAGES:', numImages);
       }
       if (numImages >= totalNumImages) {
         clearInterval(id);

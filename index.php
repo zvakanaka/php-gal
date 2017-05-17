@@ -79,7 +79,7 @@ if ($action == 'home') {
   $message = "Breathe in. Breathe out. Repeat until photos are downloaded to ".$new_album.".";
   include('views/admin.php');
   die();
-} else if ($action == 'download_and_process') {
+} else if ($action == 'download_and_process_old') {
   is_admin();
   $new_album = filter_input(INPUT_POST, 'new_album', FILTER_SANITIZE_STRING);
   if ($new_album == NULL || $new_album == FALSE) {

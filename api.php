@@ -10,12 +10,13 @@ if ($action == 'download_progress') {
   echo json_encode($arr);
   die();
 } else if ($action == 'num_images_on_camera') {
-  $num_images_on_camera = array ('totalNumImages'=>get_stat('images'));
-  echo json_encode($num_images_on_camera);
+  $num_images_on_camera = get_stat('images');
+  $response = array ('totalNumImages' => $num_images_on_camera);
+  echo json_encode($response);
 } else if ($action == 'download_and_process') {
-  if (!isset($_SESSION["is_admin"])) {// authenticate
+  if (!check_admin()) {// authenticate
     $error = "Sorry, only administrators can do these things.";
-    include('views/admin.php');
+    echo json_encode(array('error'=>$error));
     die();
   }
   $new_album = filter_input(INPUT_GET, 'new_album', FILTER_SANITIZE_STRING);
@@ -34,9 +35,9 @@ if ($action == 'download_progress') {
   echo json_encode($arr);
   die();
 } else if ($action == 'upload_to_server') {
-  if (!isset($_SESSION["is_admin"])) {// authenticate
+  if (!check_admin()) {// authenticate
     $error = "Sorry, only administrators can do these things.";
-    include('views/admin.php');
+    echo json_encode(array('error'=>$error));
     die();
   }
   $username = filter_input(INPUT_GET, 'username', FILTER_SANITIZE_STRING);
@@ -69,22 +70,7 @@ if ($action == 'download_progress') {
   echo json_encode($arr);
   die();
 } else if ($action == 'album_names') {
-  $album_blacklist = array();
-  $hidden_albums = get_hidden_albums();
-  foreach ($hidden_albums as $album) {
-    $album_blacklist[] = $album['album_name'];
-  }
-  if (isset($_SESSION["is_admin"])) {// authenticate
-    $show_hidden = filter_input(INPUT_GET, 'hidden', FILTER_SANITIZE_STRING);
-  } else {
-    $show_hidden = 'false';
-  }
-  $albums = array();
-  if ($show_hidden == 'true') {
-    $albums = get_albums($photo_dir, array());
-  } else {
-    $albums = get_albums($photo_dir, $album_blacklist);
-  }
+  $albums = get_albums($photo_dir, array());
   echo json_encode($albums);
   die();
 } else if ($action == 'pictures_in_album') {
@@ -95,27 +81,8 @@ if ($action == 'download_progress') {
     echo json_encode($arr);
     die();
   }
-  $image_blacklist = array();
-  $hidden_images = get_hidden_images();
-  foreach ($hidden_images as $image) {
-    $image_blacklist[] = $image['image_name'];
-  }
-  $hidden_albums = get_hidden_albums();
-  $album_blacklist = array();
-  foreach ($hidden_albums as $hidden_album) {
-    $album_blacklist[] = $hidden_album['album_name'];
-  }
-  if (in_array($album, $album_blacklist)) {
-    $is_hidden = true;
-  }
-  $show_hidden = filter_input(INPUT_GET, 'hidden', FILTER_SANITIZE_STRING);
-  $images = array();
-  if ($show_hidden == 'true') {
-    $images = get_images($photo_dir, $album, array());
-  } else {
-    $images = get_images($photo_dir, $album, $image_blacklist);
-  }
-  $arr = array ('isHidden'=>$is_hidden, 'images'=>$images);
+  $images = get_images($photo_dir, $album, array());
+  $arr = array ('images'=>$images);
   echo json_encode($arr);
   die();
 }
