@@ -139,24 +139,31 @@ downloadBtn.addEventListener('click', function processDownloadForm() {
   if (!hakunaMatata) return;
 
   let albumName = document.querySelector('#new-album-name').value;
-  progressBarProgress.parentNode.classList.remove('hidden');
-  document.querySelector('#progress-spacer').classList.remove('hidden');
-  let interval = {id:0};
+  let interval = {id: 0};
   var width = 0;
   var numImages = 0;
   var totalNumImages = 0;
   let random = 'time=' + new Date().getTime();
+  let progressError = document.querySelector('#progress-error');
   getJSON('/gal?action=num_images_on_camera&'+random)
   .then(function(response) {
     totalNumImages = Number(response['totalNumImages']);
-    totalNumImages = totalNumImages*5+2;
-    getJSON('/gal?action=download_and_process&new_album='+albumName+'&num_images_on_camera='+totalNumImages+'&'+random)
-    .then(function(response2) {
-      console.log(response2);
-      interval.id = setInterval(getDownloadProgress, 2000);
-    }).catch(function(err) {
-      console.error(err);
-    });
+    totalNumImages = (totalNumImages == 0) ? 0 : totalNumImages*5+2;
+    if (totalNumImages > 0) {
+      progressError.classList.add('hidden');
+      progressBarProgress.parentNode.classList.remove('hidden');
+      document.querySelector('#progress-spacer').classList.remove('hidden');
+      getJSON('/gal?action=download_and_process&new_album='+albumName+'&num_images_on_camera='+totalNumImages+'&'+random)
+      .then(function(response2) {
+        console.log(response2);
+        interval.id = setInterval(getDownloadProgress, 2000);
+      }).catch(function(err) {
+        console.error(err);
+      });
+    } else {
+      progressError.classList.remove('hidden');
+      progressError.textContent = 'No camera/no images found'
+    }
   }).catch(function(err) {
     console.error(err);
   });

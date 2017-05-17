@@ -6,6 +6,7 @@
       <input type="text" class="nice" id="new-album-name" minLength="1" maxlength="32" required/>
       <p class="input-error-message"></p>
     </label>
+      <div class="hidden error" id="progress-error"></div>
       <div class="hidden" id="progress-spacer"></div>
       <div class="nice hidden progress-bar" id="download-progress-bar">
         <div class="nice progress-bar-progress" id="download-progress-bar-progress">0%</div>
