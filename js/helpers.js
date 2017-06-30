@@ -238,9 +238,9 @@ uploadBtn.addEventListener('click', function() {
 
 let processBtn = document.querySelector('#process');
 processBtn.addEventListener('click', function() {
-  var text;
-  var favDrink = prompt("Generating thumbs and webs for all albums takes like an eon, are you sure?", "no");
-  switch(favDrink) {
+  let text;
+  let answer = prompt("Generating thumbs and webs for all albums takes like an eon, are you sure?", "no");
+  switch(answer) {
       case "yes":
         text = "yes";
         break;
