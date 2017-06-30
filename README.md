@@ -1,9 +1,9 @@
 # gal - Raspberry Pi Gallery for DSLR Cameras
 No-sweat setup, just plop in the public directory of a PHP web-server  
 
-Downloads pictures from your DSLR straight to a directory named `photo` (also in web-server public folder)
+Downloads pictures from your DSLR straight to a sibling directory named `photo`  
 
-
+Thumbnails and lightbox-sized previews are generated automatically at time of download
 
 ![Screenshot](https://raw.githubusercontent.com/zvakanaka/photo-gal/master/img/photo-gal.png)  
 
