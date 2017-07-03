@@ -18,7 +18,8 @@
   </div>
 <?php } ?>
 </div>
-<script src="js/little-big-img.js"></script>
+<script src="<?php echo $project_dir."/js/little-big-img.js";?>"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo $project_dir;?>/styles/little-big-img.css"/>
 </main>
 <?php if (isset($_SESSION['is_admin'])) { ?>
   <?php

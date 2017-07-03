@@ -1,3 +1,4 @@
+const MIN_NO_FULLSIZE = 250;
 function detectIE() {
   var ua = window.navigator.userAgent;
   var ie = ua.search(/(MSIE|Trident|Edge)/);
@@ -32,19 +33,22 @@ function pageLoad() {
     } else {
       path = evt.target;
     }
-    if (
-      path.hasAttribute("data-fullsize") &&
-      !Array.from(path.classList).includes("done-loading")
-    ) {
-      loadImage(path.dataset.fullsize).then(function(img) {
+    if (path.hasAttribute("data-fullsize") &&
+      !Array.from(path.classList).includes("done-loading")) {
+      if (path.width > MIN_NO_FULLSIZE) {
+        loadImage(path.dataset.fullsize).then(function(img) {
+          path.classList.add("done-loading");
+          path.src = img.src;
+          setTimeout(function waitASmallBit() {
+            path.classList.add("loaded");
+            img = null; //eslint-disable-line
+            evt = null; //eslint-disable-line
+          }, 50); // TODO: only set timeout on firefox
+        });
+      } else {
         path.classList.add("done-loading");
-        path.src = img.src;
-        setTimeout(function waitASmallBit() {
-          path.classList.add("loaded");
-          img = null; //eslint-disable-line
-          evt = null; //eslint-disable-line
-        }, 50); // TODO: only set timeout on firefox
-      });
+        path.classList.add("loaded");
+      }
     }
   }
 
@@ -60,7 +64,9 @@ function pageLoad() {
   let imgs = Array.from(document.querySelectorAll("img"));
   imgs.forEach(function(img) {
     img.addEventListener("load", function(e) {
-      evhandler(e);
+      setTimeout(function() {
+        evhandler(e);
+      }, 250);
     });
   });
 }

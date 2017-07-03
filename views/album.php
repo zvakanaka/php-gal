@@ -45,7 +45,8 @@
   </form>
 <?php } ?>
 <?php } ?>
-
+<script src="<?php echo $project_dir."/js/little-big-img.js";?>"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo $project_dir;?>/styles/little-big-img.css"/>
 <?php include $_SERVER['DOCUMENT_ROOT'].$project_dir.'/views/parts/lightbox.php'; ?>
 
 <!-- if query string photo, open lightbox for it -->
